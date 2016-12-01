@@ -1,61 +1,69 @@
 module Day01 where
 
 import Text.Regex.PCRE
+import Data.Tuple
+
+-- Part 1
 
 format :: [String] -> (String, Int)
-format [_, dir, num] = (dir, read num :: Int)
+format [_, direction, num] = (direction, read num :: Int)
 
 split :: String -> [[String]]
 split text = text =~ "(L|R)(\\d+)" :: [[String]]
 
-move :: (String, Int) -> ((Int, Int), Int) -> (Int, Int)
-move ("R", nr) ((x, y), 0) = (x + nr, y     )
-move ("R", nr) ((x, y), 1) = (x     , y - nr)
-move ("R", nr) ((x, y), 2) = (x - nr, y     )
-move ("R", nr) ((x, y), 3) = (x     , y + nr)
-move ("L", nr) ((x, y), i) = move ("R", nr) ((x, y), (mod (i + 2) 4))
+multiplier :: Int -> Int
+multiplier number = mod number 2 + (-2) * div number 3
 
-direction ("R", _) dir = mod (dir + 1) 4
-direction ("L", _) dir = mod (dir - 1) 4
+move :: (String, Int) -> ((Int, Int), Int) -> (Int, Int)
+move ("R", steps) ((x, y), direction) = (x + steps * multiplier (mod (direction + 1) 4), y + steps * multiplier (mod (direction + 2) 4))
+move ("L", steps) (xy, direction) = move ("R", steps) (xy, mod (direction + 2) 4)
+
+turn "R" direction = mod (direction + 1) 4
+turn "L" direction = mod (direction - 1) 4
 
 walk :: ((Int, Int), Int) -> (String, Int) -> ((Int, Int), Int)
-walk command@(_, dir) pos = ((move pos command), direction pos dir)
+walk command@(_, direction) position@(side, _) = ((move position command), turn side direction)
 
+blocks :: (Int, Int) -> Int
 blocks (x, y) = abs x + abs y
 
 solve1 :: String -> Int
-solve1 s = blocks . fst . foldl walk ((0, 0), 0) $ fmap format $ split s
+solve1 = blocks . fst . foldl walk ((0, 0), 0) . fmap format . split
 
-result1 file = do input <- readFile file
-                  putStrLn . show . solve1 $ input
+result1 :: FilePath -> IO ()
+result1 filepath = readFile filepath >>= putStrLn . show . solve1
 
-tests = test1 && test2 && test3
-test1 = 5 == solve1 "R2, L3"
-test2 = 2 == solve1 "R2, R2, R2"
-test3 = 12 == solve1 "R5, L5, R5, R3"
+-- Part 2
 
 slide :: [(Int, Int)] -> [((Int, Int), (Int, Int))]
 slide [_] = []
-slide (x:xx:xs) = (x, xx) : (slide (xx:xs))
+slide (x:xx:xs) = (x, xx) : slide (xx:xs)
 
-step ((x1, y1), (x2, y2)) = [(x, y) | x <- [x1..x2], y <- [y1..y2]]
+steps :: [((Int, Int), (Int, Int))] -> [(Int, Int)]
+steps f = let (x:xs) = map expand f
+          in x ++ (xs >>= tail)
 
-fixStep s@((x1, y1), (x2, y2))
-  | x1 > x2 = reverse $ step ((x2, y1), (x1, y2))
-  | y1 > y2 = reverse $ step ((x1, y2), (x2, y1))
-  | otherwise = step s
+expand :: ((Int, Int), (Int, Int)) -> [(Int, Int)]
+expand s@((x1, y1), (x2, y2))
+  | x1 > x2 = reverse . steps $ ((x2, y1), (x1, y2))
+  | y1 > y2 = reverse . steps $ ((x1, y2), (x2, y1))
+  | otherwise = steps s
+  where steps ((x1, y1), (x2, y2)) = [(x, y) | x <- [x1..x2], y <- [y1..y2]]
   
-
 duplicate :: [(Int, Int)] -> [(Int, Int)] -> (Int, Int)
-duplicate visited (xy:rest) 
-  | elem xy visited = xy
-  | otherwise = duplicate (xy:visited) rest
+duplicate visited (position:rest) 
+  | elem position visited = position
+  | otherwise = duplicate (position:visited) rest
 
-hack (x:xs) = x : map tail xs
+solve2 :: String -> Int
+solve2 = blocks . duplicate [] . steps . slide . map fst . scanl walk ((0, 0), 0) . fmap format . split
 
-solve2 s = hack . map fixStep . slide . map fst . scanl walk ((0, 0), 0) $ fmap format $ split s
+result2 :: FilePath -> IO ()
+result2 filepath =  readFile filepath >>= putStrLn . show . solve2
 
-solve3 s = map fst . scanl walk ((0, 0), 0) $ fmap format $ split s
+--- Tests
 
-result2 file = do input <- readFile file
-                  putStrLn . show . blocks . duplicate [] $ solve2 input >>= id
+test1 = 5 == solve1 "R2, L3"
+test2 = 2 == solve1 "R2, R2, R2"
+test3 = 12 == solve1 "R5, L5, R5, R3"
+test4 = 4 == solve2 "R8, R4, R4, R8"
