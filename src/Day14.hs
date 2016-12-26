@@ -3,7 +3,6 @@ module Day14 where
 import Text.Regex.PCRE
 import Crypto.Hash
 import Crypto.Hash.Algorithms
-import Debug.Trace
 import qualified Data.ByteString.Char8 as B
 
 md5 :: B.ByteString -> Digest MD5
