@@ -8,11 +8,11 @@ import qualified Data.ByteString.Char8 as B
 md5 :: B.ByteString -> Digest MD5
 md5 = hash
 
-md5_string :: String -> String
-md5_string = show . md5 . B.pack
+md5String :: String -> String
+md5String = show . md5 . B.pack
 
 crack :: String -> [String]
-crack door_id = filter ((==) "00000" . take 5) . fmap (md5_string . (++) door_id . show) $ [0..]
+crack door_id = filter ((==) "00000" . take 5) . fmap (md5String . (++) door_id . show) $ [0..]
 
 -- Part 1
 
