@@ -5,7 +5,7 @@ import Data.Function
 
 pivot :: [String] -> [String]
 pivot ([]:_) = []
-pivot x = (h:t)
+pivot x = h : t
   where 
     h = fmap head x
     t = pivot . fmap tail $ x
@@ -19,14 +19,14 @@ solve1 :: String -> String
 solve1 = solve $ maximumBy (compare `on` length)
 
 result1 :: FilePath -> IO ()
-result1 filepath = readFile filepath >>= putStrLn . show . solve1
+result1 filepath = readFile filepath >>= print . solve1
 
 -- Part 2
 solve2 :: String -> String
 solve2 = solve $ minimumBy (compare `on` length)
 
 result2 :: FilePath -> IO ()
-result2 filepath = readFile filepath >>= putStrLn . show . solve2
+result2 filepath = readFile filepath >>= print . solve2
 
 -- Tests
 test_input1 = "eedadn\ndrvtee\neandsr\nraavrd\natevrs\ntsrnev\nsdttsa\nrasrtv\nnssdts\nntnada\nsvetve\ntesnvt\nvntsnd\nvrdear\ndvrsen\nenarar"

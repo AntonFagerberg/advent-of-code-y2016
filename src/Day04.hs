@@ -1,34 +1,34 @@
-module Day01 where
+module Day04 where
   
 import Text.Regex.PCRE
 import qualified Data.Map.Strict as Map
 import Data.List
 import Data.Char
+import Data.Maybe
+import Data.Tuple.Select
 
 split :: String -> [[String]]
 split text = text =~ "([a-z-]+)([0-9]+)\\[([a-z]+)\\]"
 
-parse :: [[String]] -> ([Char], Int, [Char])
+parse :: [[String]] -> (String, Int, String)
 parse [[_, room, sector, checksum]] = (room, read sector, checksum)
 
-char_sort :: String -> String -> Ordering
-char_sort a b
+charSort :: String -> String -> Ordering
+charSort a b
   | len_a > len_b = LT
   | len_a < len_b = GT
   | otherwise = compare a b
   where (len_a, len_b) = (length a, length b)
 
 checksum :: String -> String
-checksum = take 5 . fmap head . sortBy char_sort . group . sort . filter ('-' /=)
+checksum = take 5 . fmap head . sortBy charSort . group . sort . filter ('-' /=)
 
-validate :: ([Char], Int, [Char]) -> Int
+validate :: (String, Int, String) -> Int
 validate (room, sector, validation_checksum)
   | checksum room == validation_checksum = sector
   | otherwise = 0
 
 -- Part 1
-result1 :: FilePath -> IO ()
-result1 filepath = readFile filepath >>= putStrLn . show . solve1
 
 solve1 :: String -> Int
 solve1 = sum . fmap (validate . parse . split) . lines
@@ -45,17 +45,8 @@ decrypt key char = chr shifted
                       key_shift = char_int - min_int + key
                       shifted = min_int + mod key_shift max_int
 
-target :: String -> ([Char], Int, [Char]) -> Bool
+target :: String -> (String, Int, String) -> Bool
 target text (room, sector, validation_checksum) = checksum room == validation_checksum && fmap (decrypt sector) room == text
 
-solve2 :: String -> Maybe ([Char], Int, [Char])
-solve2 = find (target "northpole object storage ") . fmap (parse . split) . lines
-
-result2 :: FilePath -> IO ()
-result2 filepath = readFile filepath >>= putStrLn . show . solve2
-
--- Tests
-test_input1 = "aaaaa-bbb-z-y-x-123[abxyz]\na-b-c-d-e-f-g-h-987[abcde]\nnot-a-real-room-404[oarel]\ntotally-real-room-200[decoy]"
-
-test1 :: Bool
-test1 = 1514 == solve1 test_input1
+solve2 :: String -> Int
+solve2 = sel2 . fromJust . find (target "northpole object storage ") . fmap (parse . split) . lines

@@ -22,16 +22,13 @@ turn "R" direction = mod (direction + 1) 4
 turn "L" direction = mod (direction - 1) 4
 
 walk :: ((Int, Int), Int) -> (String, Int) -> ((Int, Int), Int)
-walk command@(_, direction) position@(side, _) = ((move position command), turn side direction)
+walk command@(_, direction) position@(side, _) = (move position command, turn side direction)
 
 blocks :: (Int, Int) -> Int
 blocks (x, y) = abs x + abs y
 
 solve1 :: String -> Int
 solve1 = blocks . fst . foldl walk ((0, 0), 0) . fmap format . split
-
-result1 :: FilePath -> IO ()
-result1 filepath = readFile filepath >>= putStrLn . show . solve1
 
 -- Part 2
 
@@ -52,18 +49,8 @@ expand s@((x1, y1), (x2, y2))
   
 duplicate :: [(Int, Int)] -> [(Int, Int)] -> (Int, Int)
 duplicate visited (position:rest) 
-  | elem position visited = position
+  | position `elem` visited = position
   | otherwise = duplicate (position:visited) rest
 
 solve2 :: String -> Int
 solve2 = blocks . duplicate [] . steps . slide . map fst . scanl walk ((0, 0), 0) . fmap format . split
-
-result2 :: FilePath -> IO ()
-result2 filepath =  readFile filepath >>= putStrLn . show . solve2
-
---- Tests
-
-test1 = 5 == solve1 "R2, L3"
-test2 = 2 == solve1 "R2, R2, R2"
-test3 = 12 == solve1 "R5, L5, R5, R3"
-test4 = 4 == solve2 "R8, R4, R4, R8"
