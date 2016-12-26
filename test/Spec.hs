@@ -11,6 +11,7 @@ import Day08
 import Day09
 import Day10
 import Day12
+import Day14
 
 main :: IO ()
 main = hspec $ 
@@ -185,3 +186,13 @@ main = hspec $
       it "Part 2 - Solution" $ do
         input <- readFile "input/day12"
         Day12.solve2 input `shouldBe` 9227663
+        
+    describe "Day14" $ do
+      it "Part 1 - Test" $
+        Day14.solve1 "abc" `shouldBe` 22728
+      it "Part 1 - Solution" $
+        Day14.solve1 "cuanljph" `shouldBe` 23769
+      it "Part 2 - Test" $
+        Day14.solve2 "abc" `shouldBe` 22551
+      it "Part 2 - Solution" $
+        Day14.solve2 "cuanljph" `shouldBe` 20606
