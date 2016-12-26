@@ -13,6 +13,7 @@ import Day10
 import Day12
 import Day13
 import Day14
+import Day16
 
 main :: IO ()
 main = hspec $ 
@@ -205,3 +206,23 @@ main = hspec $
         Day13.solve1 1362 (31,39) 0 [(1,1)] `shouldBe` 82
       it "Part 2 - Solution" $
         Day13.solve2 1362 50 [(1,1)] `shouldBe` 138
+        
+    describe "Day16" $ do
+      it "Part 1 - Test 1" $
+        Day16.generate "1" `shouldBe` "100"
+      it "Part 1 - Test 2" $
+        Day16.generate "0" `shouldBe` "001"
+      it "Part 1 - Test 3" $
+        Day16.generate "11111" `shouldBe` "11111000000"
+      it "Part 1 - Test 4" $
+        Day16.generate "111100001010" `shouldBe` "1111000010100101011110000"
+      it "Part 1 - Test 5" $
+        Day16.partialChecksum "110010110100" `shouldBe` "110101"
+      it "Part 1 - Test 6" $
+        Day16.checksum "110010110100" `shouldBe` "100"
+      it "Part 1 - Test 7" $
+        Day16.solve 20 "10000" `shouldBe` "01100"
+      it "Part 1 - Solution" $
+        Day16.solve 272 "11101000110010100" `shouldBe` "10100101010101101"
+      it "Part 2 - Solution" $
+        Day16.solve 35651584 "11101000110010100" `shouldBe` "01100001101101001"
