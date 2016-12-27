@@ -2,7 +2,6 @@ module Day20 where
 
 import Data.List
 import Data.List.Split
-import Debug.Trace
 
 parse :: String -> [(Integer, Integer)]
 parse = sort . fmap ((\[from ,to] -> (read from, read to)) . splitOn "-") . lines

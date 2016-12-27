@@ -1,7 +1,6 @@
 module Day19 where
   
 import Data.List
-import Debug.Trace
   
 dropFirstIfOdd :: [a] -> [a]
 dropFirstIfOdd list
