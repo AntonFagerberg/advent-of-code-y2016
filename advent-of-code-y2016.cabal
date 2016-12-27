@@ -15,13 +15,14 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Day01, Day02, Day03, Day04, Day05, Day06, Day07, Day08, Day09, Day10, Day12, Day13, Day14, Day16, Day19
+  exposed-modules:     Day01, Day02, Day03, Day04, Day05, Day06, Day07, Day08, Day09, Day10, Day12, Day13, Day14, Day16, Day19, Day20
   build-depends:       base >= 4.7 && < 5
                      , regex-pcre
                      , containers
                      , cryptonite
                      , bytestring
                      , tuple
+                     , split
   default-language:    Haskell2010
 
 executable advent-of-code-y2016-exe
