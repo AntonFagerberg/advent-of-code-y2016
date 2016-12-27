@@ -14,6 +14,7 @@ import Day12
 import Day13
 import Day14
 import Day16
+import Day19
 
 main :: IO ()
 main = hspec $ 
@@ -226,3 +227,13 @@ main = hspec $
         Day16.solve 272 "11101000110010100" `shouldBe` "10100101010101101"
       it "Part 2 - Solution" $
         Day16.solve 35651584 "11101000110010100" `shouldBe` "01100001101101001"
+    
+    describe "Day19" $ do
+      it "Part 1 - Test 1" $
+        Day19.solve1 5 `shouldBe` 3
+      it "Part 1 - Solution" $
+         Day19.solve1 3012210 `shouldBe` 1830117
+      it "Part 2 - Test 1" $
+        Day19.solve2 5 `shouldBe` 2
+      it "Part 2 - Solution" $
+        Day19.solve2 3012210 `shouldBe` 1417887
