@@ -3,7 +3,7 @@ version:             0.1.0.0
 synopsis:            Adevent of Code 2016 solutions in Haskell
 description:         Please see README.md
 homepage:            https://github.com/AntonFagerberg/advent-of-code-y2016
-license:             GPLv3
+license:             GPL-3
 license-file:        LICENSE
 author:              Anton Fagerberg
 maintainer:          anton@antonfagerberg.com
