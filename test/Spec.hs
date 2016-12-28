@@ -17,6 +17,7 @@ import Day16
 import Day19
 import Day20
 import Day23
+import Day24
 import Day25
 
 main :: IO ()
@@ -273,7 +274,27 @@ main = hspec $
       it "Part 2 - Solution" $ do
         input <- readFile "input/day23"
         Day23.solve 12 input `shouldBe` 479009076
-        
+    
+    describe "Day24" $ do
+      let testInput = "###########\n" ++
+                      "#0.1.....2#\n" ++
+                      "#.#######.#\n" ++
+                      "#4.......3#\n" ++
+                      "###########"
+                      
+      it "Part 1 - test 1" $
+        Day24.start (lines testInput) `shouldBe` (1, 1)
+      it "Part 1 - test 2" $
+        Day24.targets (lines testInput) `shouldBe` [(1,1),(1,3),(1,9),(3,1),(3,9)]
+      it "Part 1 - test 3" $
+        Day24.solve1 testInput `shouldBe` 14
+      it "Part 1 - solution" $ do
+        input <- readFile "input/day24"
+        Day24.solve1 input `shouldBe` 464
+      it "Part 2 - solution" $ do
+        input <- readFile "input/day24"
+        Day24.solve2 input `shouldBe` 652
+    
     describe "Day25" $
       it "Part 1 - solve" $ do
         input <- readFile "input/day25"
