@@ -1,7 +1,6 @@
 module Day15 where
 
 import Text.Regex.PCRE
-import Debug.Trace
 
 parse :: String -> [(Int, Int)]
 parse input = (\[positions, position] -> (positions, position)) . fmap read . tail . tail <$> matches
