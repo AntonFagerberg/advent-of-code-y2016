@@ -13,6 +13,7 @@ import Day10
 import Day12
 import Day13
 import Day14
+import Day15
 import Day16
 import Day19
 import Day20
@@ -194,6 +195,14 @@ main = hspec $
         input <- readFile "input/day12"
         Day12.solve2 input `shouldBe` 9227663
         
+    describe "Day13" $ do
+      it "Part 1 - Test" $
+        Day13.solve1 10 (7,4) 0 [(1,1)] `shouldBe` 11
+      it "Part 1 - Solution" $
+        Day13.solve1 1362 (31,39) 0 [(1,1)] `shouldBe` 82
+      it "Part 2 - Solution" $
+        Day13.solve2 1362 50 [(1,1)] `shouldBe` 138
+        
     describe "Day14" $ do
       it "Part 1 - Test" $
         Day14.solve1 "abc" `shouldBe` 22728
@@ -204,13 +213,19 @@ main = hspec $
       it "Part 2 - Solution" $
         Day14.solve2 "cuanljph" `shouldBe` 20606
         
-    describe "Day13" $ do
-      it "Part 1 - Test" $
-        Day13.solve1 10 (7,4) 0 [(1,1)] `shouldBe` 11
-      it "Part 1 - Solution" $
-        Day13.solve1 1362 (31,39) 0 [(1,1)] `shouldBe` 82
-      it "Part 2 - Solution" $
-        Day13.solve2 1362 50 [(1,1)] `shouldBe` 138
+    describe "Day15" $ do
+      let testInput = "Disc #1 has 5 positions; at time=0, it is at position 4." ++
+                      "Disc #2 has 2 positions; at time=0, it is at position 1."
+      it "Part 1 - Test 1" $
+        Day15.parse testInput `shouldBe` [(5,4),(2,1)]
+      it "Part 1 - Test 2" $
+        Day15.solve1 testInput `shouldBe` 5
+      it "Part 1 - Solve 1" $ do
+        input <- readFile "input/day15"
+        Day15.solve1 input `shouldBe` 203660
+      it "Part 1 - Solve 2" $ do
+        input <- readFile "input/day15"
+        Day15.solve2 input `shouldBe` 2408135
         
     describe "Day16" $ do
       it "Part 1 - Test 1" $
