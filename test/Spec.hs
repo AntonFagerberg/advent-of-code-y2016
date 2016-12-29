@@ -16,6 +16,7 @@ import Day14
 import Day15
 import Day16
 import Day17
+import Day18
 import Day19
 import Day20
 import Day23
@@ -265,6 +266,18 @@ main = hspec $
         Day17.solve2 "ulqzkmiv" `shouldBe` 830
       it "Part 2 - Solution" $
         Day17.solve2 "hhhxzeay" `shouldBe` 398
+    
+    describe "Day18" $ do
+      it "Part 1 - Test 1" $
+        Day18.generate "..^^." `shouldBe` ".^^^^"
+      it "Part 1 - Test 2" $
+        Day18.solve1 10 ".^^.^.^^^^" `shouldBe` 38
+      it "Part 1 - Solve" $ do
+        input <- readFile "input/day18"
+        Day18.solve1 40 input `shouldBe` 1926
+      it "Part 2 - Solve" $ do
+        input <- readFile "input/day18"
+        Day18.solve2 400000 input `shouldBe` 19986699
     
     describe "Day19" $ do
       it "Part 1 - Test 1" $
