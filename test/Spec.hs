@@ -15,6 +15,7 @@ import Day13
 import Day14
 import Day15
 import Day16
+import Day17
 import Day19
 import Day20
 import Day23
@@ -246,6 +247,24 @@ main = hspec $
         Day16.solve 272 "11101000110010100" `shouldBe` "10100101010101101"
       it "Part 2 - Solution" $
         Day16.solve 35651584 "11101000110010100" `shouldBe` "01100001101101001"
+    
+    describe "Day17" $ do
+      it "Part 1 - Test 1" $
+        Day17.solve1 "ihgpwlah" `shouldBe` "DDRRRD"
+      it "Part 1 - Test 2" $
+        Day17.solve1 "kglvqrro" `shouldBe` "DDUDRLRRUDRD"
+      it "Part 1 - Test 3" $
+        Day17.solve1 "ulqzkmiv" `shouldBe` "DRURDRUDDLLDLUURRDULRLDUUDDDRR"
+      it "Part 1 - Solution" $
+        Day17.solve1 "hhhxzeay" `shouldBe` "DDRUDLRRRD"
+      it "Part 2 - Test 1" $
+        Day17.solve2 "ihgpwlah" `shouldBe` 370
+      it "Part 2 - Test 2" $
+        Day17.solve2 "kglvqrro" `shouldBe` 492
+      it "Part 2 - Test 3" $
+        Day17.solve2 "ulqzkmiv" `shouldBe` 830
+      it "Part 2 - Solution" $
+        Day17.solve2 "hhhxzeay" `shouldBe` 398
     
     describe "Day19" $ do
       it "Part 1 - Test 1" $
