@@ -19,6 +19,7 @@ import Day17
 import Day18
 import Day19
 import Day20
+import Day21
 import Day23
 import Day24
 import Day25
@@ -303,6 +304,62 @@ main = hspec $
       it "Part 2 - Solution" $ do
         input <- readFile "input/day20"
         Day20.solve2 input `shouldBe` 113
+        
+    describe "Day21" $ do
+      it "Part 1 - Test 1" $
+        Day21.command "swap position 4 with position 0" `shouldBe` ["swap position","4","0"]
+      it "Part 1 - Test 2" $
+        Day21.solve1 "abcde" "swap position 4 with position 0" `shouldBe` "ebcda"
+      it "Part 1 - Test 3" $
+        Day21.solve1 "ebcda" "swap letter d with letter b" `shouldBe` "edcba"
+      it "Part 1 - Test 4" $
+        Day21.solve1 "abcde" "rotate left 1 step" `shouldBe` "bcdea"
+      it "Part 1 - Test 5" $
+        Day21.solve1 "abcde" "rotate right 1 step" `shouldBe` "eabcd"
+      it "Part 1 - Test 6" $
+        Day21.solve1 "edcba" "reverse positions 0 through 4" `shouldBe` "abcde"
+      it "Part 1 - Test 7" $
+        Day21.solve1 "bcdea" "move position 1 to position 4" `shouldBe` "bdeac"
+      it "Part 1 - Test 8" $
+        Day21.solve1 "bdeac" "move position 3 to position 0" `shouldBe` "abdec"
+      it "Part 1 - Test 9" $
+        Day21.solve1 "abdec" "rotate based on position of letter b" `shouldBe` "ecabd"
+      it "Part 1 - Test 10" $
+        Day21.solve1 "ecabd" "rotate based on position of letter d" `shouldBe` "decab"
+      it "Part 1 - Solve" $ do
+        input <- readFile "input/day21"
+        Day21.solve1 "abcdefgh" input `shouldBe` "dbfgaehc"
+      it "Part 2 - Test 1" $
+        Day21.solve2 "ebcda" "swap position 4 with position 0" `shouldBe` "abcde"
+      it "Part 2 - Test 2" $
+        Day21.solve2 "edcba" "swap letter d with letter b" `shouldBe` "ebcda"
+      it "Part 2 - Test 3" $
+        Day21.solve2 "bcdea" "rotate left 1 step" `shouldBe` "abcde"
+      it "Part 2 - Test 4" $
+        Day21.solve2 "eabcd" "rotate right 1 step" `shouldBe` "abcde"
+      it "Part 2 - Test 5" $
+        Day21.solve2 "abcde" "reverse positions 0 through 4" `shouldBe` "edcba"
+      it "Part 2 - Test 6" $
+        Day21.solve2 "bdeac" "move position 1 to position 4" `shouldBe` "bcdea"
+      it "Part 2 - Test 7" $
+        Day21.solve2 "abdec" "move position 3 to position 0" `shouldBe` "bdeac"
+      it "Part 2 - Test 8" $
+        Day21.solve2 "ecabd" "rotate based on position of letter b" `shouldBe` "abdec"
+      -- This has two solutions ...
+      -- it "Part 2 - Test 9" $ 
+      --   Day21.solve2 "decab" "rotate based on position of letter d" `shouldBe` "ecabd"
+      it "Part 2 - Test 10" $
+        Day21.solve2 "dhfgaebc" "rotate based on position of letter e" `shouldBe` "gaebcdhf"
+      it "Part 2 - Test 11" $
+        Day21.solve2 "dhfgaebc" "rotate based on position of letter e" `shouldBe` "gaebcdhf"
+      it "Part 2 - Test 12" $
+        Day21.solve2 "aebcdhfg" "rotate based on position of letter f" `shouldBe` "aebcdhfg"
+      it "Part 2 - Test 13" $ do
+        input <- readFile "input/day21"
+        (flip Day21.solve2 input . Day21.solve1 "abcdefgh") input `shouldBe` "abcdefgh"
+      it "Part 2 - Solve" $ do
+        input <- readFile "input/day21"
+        Day21.solve2 "fbgdceah" input `shouldBe` "aghfcdeb"
         
     describe "Day23" $ do
       let testInput = "cpy 2 a\n" ++
