@@ -20,9 +20,12 @@ import Day18
 import Day19
 import Day20
 import Day21
+import Day22
 import Day23
 import Day24
 import Day25
+
+import Data.Set as Set (fromList)
 
 main :: IO ()
 main = hspec $ 
@@ -360,6 +363,28 @@ main = hspec $
       it "Part 2 - Solve" $ do
         input <- readFile "input/day21"
         Day21.solve2 "fbgdceah" input `shouldBe` "aghfcdeb"
+        
+    describe "Day22" $ do
+      let testInput = "\nFilesystem            Size  Used  Avail  Use%\n" ++
+                      "/dev/grid/node-x0-y0   10T    8T     2T   80%\n" ++
+                      "/dev/grid/node-x0-y1   11T    6T     5T   54%\n" ++
+                      "/dev/grid/node-x0-y2   32T   28T     4T   87%\n" ++
+                      "/dev/grid/node-x1-y0    9T    7T     2T   77%\n" ++
+                      "/dev/grid/node-x1-y1    8T    0T     8T    0%\n" ++
+                      "/dev/grid/node-x1-y2   11T    7T     4T   63%\n" ++
+                      "/dev/grid/node-x2-y0   10T    6T     4T   60%\n" ++
+                      "/dev/grid/node-x2-y1    9T    8T     1T   88%\n" ++
+                      "/dev/grid/node-x2-y2    9T    6T     3T   66%\n"
+      it "Part 1 - Solve" $ do
+        input <- readFile "input/day22"
+        Day22.solve1 input `shouldBe` 1038
+      it "Part 2 - Test 1" $
+        Day22.path [[(0,0)]] (Set.fromList [(0,0),(0,1),(0,2),(1,1),(1,2),(2,0),(2,1),(2,2)]) (2,0) `shouldBe` [(2,0), (2,1), (1,1), (0,1), (0,0)]
+      it "Part 2 - Test 2" $
+        Day22.solve2 testInput `shouldBe` 7
+      it "Part 2 - Solve" $ do
+        input <- readFile "input/day22"
+        Day22.solve2 input `shouldBe` 252
         
     describe "Day23" $ do
       let testInput = "cpy 2 a\n" ++
