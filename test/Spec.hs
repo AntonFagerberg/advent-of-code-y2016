@@ -199,7 +199,7 @@ main = hspec $
         Day11.solve1 input `shouldBe` 31
       it "Part 2 - Solution" $ do
         input <- readFile "input/day11"
-        Day11.solve2 input `shouldBe` 31
+        Day11.solve2 input `shouldBe` 55
         
     describe "Day12" $ do
       let testInput = "cpy 41 a\n" ++
