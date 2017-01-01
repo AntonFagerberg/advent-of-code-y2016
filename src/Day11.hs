@@ -62,4 +62,4 @@ solve2 :: String -> Int
 solve2 input = brute 0 (fromList [(0, state)]) (fromList [(0, state)])
   where 
     (firstFloor: rest) = parse input
-    state = fmap sort (["elerium","generator"] : ["elerium", "microchip"] : ["dilithium","generator"] : ["dilithium", "microchip"] : firstFloor) : rest
+    state = fmap sort $ (["elerium","generator"] : ["elerium", "microchip"] : ["dilithium","generator"] : ["dilithium", "microchip"] : firstFloor) : rest
