@@ -10,6 +10,7 @@ import Day07
 import Day08
 import Day09
 import Day10
+import Day11
 import Day12
 import Day13
 import Day14
@@ -183,6 +184,22 @@ main = hspec $
       it "Part 2 - Solution" $ do
         input <- readFile "input/day10"
         Day10.solve2 input `shouldBe` 37789
+        
+    describe "Day11" $ do
+      let testInput = "The first floor contains a hydrogen-compatible microchip and a lithium-compatible microchip.\n" ++
+                      "The second floor contains a hydrogen generator.\n" ++
+                      "The third floor contains a lithium generator.\n" ++
+                      "The fourth floor contains nothing relevant."
+      it "Part 1 - Test 1" $
+        Day11.parse testInput `shouldBe` [[["hydrogen","microchip"],["lithium","microchip"]],[["hydrogen","generator"]],[["lithium","generator"]],[]]
+      it "Part 1 - Test 2" $
+        Day11.solve1 testInput `shouldBe` 11
+      it "Part 1 - Solution" $ do
+        input <- readFile "input/day11"
+        Day11.solve1 input `shouldBe` 31
+      it "Part 2 - Solution" $ do
+        input <- readFile "input/day11"
+        Day11.solve2 input `shouldBe` 31
         
     describe "Day12" $ do
       let testInput = "cpy 41 a\n" ++
